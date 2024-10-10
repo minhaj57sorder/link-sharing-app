@@ -6,7 +6,7 @@ import axios, { Axios } from 'axios';
 // "export default () => {}" function below (which runs individually
 // for each client)
 // export const backendUrlLink = 'http://localhost:5003';
-export const backendUrlLink = 'www.sharelink.begunipik.com';
+export const backendUrlLink = 'https://www.sharelink.begunipik.com';
 export const api = axios.create({
   withCredentials: true,
   baseURL: backendUrlLink,
