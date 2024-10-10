@@ -1,0 +1,1 @@
+import{_ as e,a as t,f as s,d as c}from"./index-bc379ee9.js";const o={},n={class:"h-screen w-full bg-white text-primary"},r=c("h2",null,"Link Sharing App",-1),a=[r];function _(i,d){return t(),s("div",n,a)}const f=e(o,[["render",_]]);export{f as default};
