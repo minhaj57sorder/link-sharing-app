@@ -75,6 +75,7 @@ import {
   isValidEmail,
   isValidNumber,
 } from '@/utils/validationHelper';
+import { convertToUsername, validateUsername } from '@/utils/validationHelper';
 const $q = useQuasar();
 const userAuthStore = useUserAuthStore();
 const route = useRoute();
@@ -303,23 +304,6 @@ const getRoles = async () => {
   } finally {
   }
 };
-function validateUsername(username) {
-  // Regular expression to check if the username contains only alphanumeric characters
-  const usernameRegex = /^[a-zA-Z0-9]+$/;
-
-  // Test the username against the regular expression
-  if (usernameRegex.test(username)) {
-    return true; // Username is valid
-  } else {
-    return false; // Username is invalid
-  }
-}
-function convertToUsername(str) {
-  // Use regular expression to replace non-alphanumeric characters with an empty string
-  const convertedUsername = str.replace(/[^a-zA-Z0-9]/g, '');
-
-  return convertedUsername;
-}
 
 // update user data
 // content type form data

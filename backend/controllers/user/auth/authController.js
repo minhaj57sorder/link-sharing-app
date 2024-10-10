@@ -62,7 +62,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST api/user/auth/register
 // @acess Public
 const registerUser = asyncHandler(async (req, res) => {
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ $or: [{ email: req.body.email }, { userName: req.body.userName }] });
   if (!user) {
     const publicRole = await Role.findOne({ slug: 'public' });
     const createduser = await User.create({
@@ -72,7 +72,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       permissions: [],
-      roles: publicRole ? publicRole._id:[],
+      roles: publicRole ? publicRole._id : [],
     });
     await UserLinks.create({
       user: createduser._id,
@@ -91,7 +91,6 @@ const registerUser = asyncHandler(async (req, res) => {
   } else {
     // res.set('Access-Control-Allow-Origin', 'http://localhost:9000');
     res.status(403);
-    // res.json({message:"error"})
     throw new Error('User already exist');
   }
 });
@@ -152,13 +151,14 @@ const createSuperAndRolesUserIfNotExist = asyncHandler(async (req, res) => {
   user.permissions = [];
   if (existUser) {
     const existLink = await UserLinks.findOne({
-      user: existUser._id,})
-      if(!existLink){
-        await UserLinks.create({
-          user: existUser._id,
-          links: []
-        })
-      }
+      user: existUser._id,
+    })
+    if (!existLink) {
+      await UserLinks.create({
+        user: existUser._id,
+        links: []
+      })
+    }
     existUser.roles = user.roles
     existUser.permissions = user.permissions
     await existUser.save()

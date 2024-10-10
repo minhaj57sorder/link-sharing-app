@@ -5,7 +5,7 @@
         <q-card>
           <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
             narrow-indicator>
-            <q-tab name="signin" label="Sign In" />
+            <q-tab name="signin" label="Login" />
             <q-tab name="register" label="Register" />
           </q-tabs>
           <q-separator />
@@ -25,12 +25,16 @@
                     placeholder="•••••••••" required />
                 </div>
                 <div className="w-full flex justify-center">
-                  <q-btn type="submit" color="green"> Sign in </q-btn>
+                  <q-btn type="submit" color="green"> Submit </q-btn>
                 </div>
               </form>
             </q-tab-panel>
             <q-tab-panel name="register">
               <form class="w-72" @submit="registerSubmit">
+
+                <div v-if="formErrors?.headerMessage" class="text-red-8 text-md font-bold">
+                  <span>{{ formErrors?.headerMessage }}</span>
+                </div>
                 <div class="mb-1">
                   <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
                   <input type="text" id="firstName" v-model="formDataLists.firstName"
@@ -48,18 +52,27 @@
                   <input type="text" id="username2" v-model="formDataLists.userName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="username without white space or special charecter" required />
+                  <div v-if="formErrors?.userName" class="text-red-8 text-xs q-pl-sm">
+                    <span>{{ formErrors?.userName }}</span>
+                  </div>
                 </div>
                 <div class="mb-1">
                   <label for="email2" class="block mb-2 text-sm font-medium text-gray-900">Email address</label>
                   <input type="email" id="email2" v-model="formDataLists.email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="john.doe@company.com" required />
+                  <div v-if="formErrors?.email" class="text-red-8 text-xs q-pl-sm">
+                    <span>{{ formErrors?.email }}</span>
+                  </div>
                 </div>
                 <div class="mb-1">
                   <label for="password2" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
                   <input type="password" id="password2" v-model="formDataLists.password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="•••••••••" required />
+                  <div v-if="formErrors?.password" class="text-red-8 text-xs q-pl-sm">
+                    <span>{{ formErrors?.password }}</span>
+                  </div>
                 </div>
                 <div class="mb-1">
                   <label for="passwordConfirm"
@@ -67,9 +80,12 @@
                   <input type="password" id="passwordConfirm" v-model="formDataLists.confirmpassword"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="•••••••••" required />
+                  <div v-if="formErrors?.confirmpassword" class="text-red-8 text-xs q-pl-sm">
+                    <span>{{ formErrors?.confirmpassword }}</span>
+                  </div>
                 </div>
                 <div className="w-full flex justify-center">
-                  <q-btn type="submit" color="green"> Register </q-btn>
+                  <q-btn type="submit" color="green"> Submit </q-btn>
                 </div>
               </form>
             </q-tab-panel>
@@ -87,9 +103,11 @@ import { isValidEmail } from '@/utils/validationHelper.js';
 import { useRouter } from 'vue-router';
 import { useUserAuthStore } from '@/stores/userAuthStore.js';
 import { useQuasar } from 'quasar';
+import { convertToUsername, validateUsername } from '@/utils/validationHelper';
 const $q = useQuasar();
 const userAuthStore = useUserAuthStore();
 const router = useRouter();
+const formErrors = ref({})
 const formDataLists = reactive({
   email: '',
   password: '',
@@ -174,71 +192,26 @@ const loginSubmit = async (e) => {
 };
 const registerSubmit = async (e) => {
   e.preventDefault();
+  formErrors.value = {}
+  if (!validateUsername(String(formDataLists.userName))) {
+    formErrors.value.userName = "User Name should not contains any whitespace or special charecter. For example " + convertToUsername(String(formDataLists.userName))
+  }
   if (!(String(formDataLists.userName))) {
-    $q.notify({
-      message: 'Please enter username',
-      color: 'red',
-      position: 'top',
-      actions: [
-        {
-          icon: 'close',
-          color: 'white',
-          handler: () => {
-            /* ... */
-          },
-        },
-      ],
-    });
-    return;
+    formErrors.value.userName = "User Name required"
   }
-  if (!formDataLists.email || !formDataLists.password) {
-    $q.notify({
-      message: 'Required feild',
-      color: 'red',
-      position: 'top',
-      actions: [
-        {
-          icon: 'close',
-          color: 'white',
-          handler: () => {
-            /* ... */
-          },
-        },
-      ],
-    });
-    return;
+  if (!formDataLists.email) {
+    formErrors.value.email = "User Email Required"
   }
-  else if (!formDataLists.email || !formDataLists.password) {
-    $q.notify({
-      message: 'Required feild',
-      color: 'red',
-      position: 'top',
-      actions: [
-        {
-          icon: 'close',
-          color: 'white',
-          handler: () => {
-            /* ... */
-          },
-        },
-      ],
-    });
-    return;
-  } else if (formDataLists.password !== formDataLists.confirmpassword) {
-    $q.notify({
-      message: 'Password and Confirmpassword dose not matched',
-      color: 'red',
-      position: 'top',
-      actions: [
-        {
-          icon: 'close',
-          color: 'white',
-          handler: () => {
-            /* ... */
-          },
-        },
-      ],
-    });
+  if (!formDataLists.password) {
+    formErrors.value.password = "User Password Required"
+  }
+  if (!formDataLists.confirmpassword) {
+    formErrors.value.confirmpassword = "User Confirm Password Required"
+  }
+  if (formDataLists.password !== formDataLists.confirmpassword) {
+    formErrors.value.confirmpassword = "Password and confirm password not matched."
+  }
+  if (Object.keys(formErrors.value).length !== 0) {
     return;
   }
   const config = {
@@ -284,9 +257,11 @@ const registerSubmit = async (e) => {
     formDataLists.confirmpassword = '';
   } catch (error) {
     console.error(error);
-    if (error?.response?.status == 401) {
+    if (error?.response?.status == 403) {
+
+      formErrors.value.headerMessage = "User name or email already exist. Try different username."
       $q.notify({
-        message: error.response.data.message + '. Login to try again.',
+        message: 'User Already exist with the username or email, Try different username or email',
         color: 'red',
         position: 'top',
         actions: [
@@ -300,6 +275,8 @@ const registerSubmit = async (e) => {
         ],
       });
     } else {
+      formErrors.value.headerMessage = "Something went wrong. Try again later"
+
       $q.notify({
         message: error.message,
         color: 'red',
