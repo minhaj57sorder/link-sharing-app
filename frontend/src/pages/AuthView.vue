@@ -12,17 +12,12 @@
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="signin">
               <form class="w-72" @submit="loginSubmit">
-                <div class="mb-6">
-                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email address</label>
-                  <input id="email" v-model="formDataLists.email"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="user name or email" required />
+                <div class="mb-3">
+                  <q-input label="Email address" v-model="formDataLists.email" required outlined dense />
                 </div>
-                <div class="mb-6">
-                  <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                  <input type="password" id="password" v-model="formDataLists.password"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="•••••••••" required />
+                <div class="mb-3">
+                  <q-input label="Password" v-model="formDataLists.password" required outlined dense
+                    placeholder="•••••••••" />
                 </div>
                 <div className="w-full flex justify-center">
                   <q-btn type="submit" color="green"> Submit </q-btn>
@@ -35,51 +30,35 @@
                 <div v-if="formErrors?.headerMessage" class="text-red-8 text-md font-bold">
                   <span>{{ formErrors?.headerMessage }}</span>
                 </div>
-                <div class="mb-1">
-                  <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-                  <input type="text" id="firstName" v-model="formDataLists.firstName"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="first name " />
+                <div class="mb-3">
+                  <q-input label="First Name" v-model="formDataLists.firstName" outlined dense />
                 </div>
-                <div class="mb-1">
-                  <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
-                  <input type="text" id="lastName" v-model="formDataLists.lastName"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="last name " />
+                <div class="mb-3">
+                  <q-input label="Last Name" v-model="formDataLists.lastName" outlined dense />
                 </div>
-                <div class="mb-1">
-                  <label for="username2" class="block mb-2 text-sm font-medium text-gray-900">User Name</label>
-                  <input type="text" id="username2" v-model="formDataLists.userName"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="username without white space or special charecter" required />
+                <div class="mb-3">
+                  <q-input label="User Name" v-model="formDataLists.userName" outlined dense
+                  placeholder="username without white space or special charecter" required  />
                   <div v-if="formErrors?.userName" class="text-red-8 text-xs q-pl-sm">
                     <span>{{ formErrors?.userName }}</span>
                   </div>
                 </div>
-                <div class="mb-1">
-                  <label for="email2" class="block mb-2 text-sm font-medium text-gray-900">Email address</label>
-                  <input type="email" id="email2" v-model="formDataLists.email"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="john.doe@company.com" required />
+                <div class="mb-3">
+                  <q-input label="Email address" v-model="formDataLists.email" required outlined dense />
                   <div v-if="formErrors?.email" class="text-red-8 text-xs q-pl-sm">
                     <span>{{ formErrors?.email }}</span>
                   </div>
                 </div>
-                <div class="mb-1">
-                  <label for="password2" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                  <input type="password" id="password2" v-model="formDataLists.password"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="•••••••••" required />
+                <div class="mb-3">
+                  <q-input label="Password" v-model="formDataLists.password" required outlined dense
+                  placeholder="•••••••••" />
                   <div v-if="formErrors?.password" class="text-red-8 text-xs q-pl-sm">
                     <span>{{ formErrors?.password }}</span>
                   </div>
                 </div>
-                <div class="mb-1">
-                  <label for="passwordConfirm"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
-                  <input type="password" id="passwordConfirm" v-model="formDataLists.confirmpassword"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="•••••••••" required />
+                <div class="mb-3">
+                  <q-input label="Confirm Password" v-model="formDataLists.confirmpassword" required outlined dense
+                  placeholder="•••••••••" />
                   <div v-if="formErrors?.confirmpassword" class="text-red-8 text-xs q-pl-sm">
                     <span>{{ formErrors?.confirmpassword }}</span>
                   </div>
@@ -109,6 +88,9 @@ const userAuthStore = useUserAuthStore();
 const router = useRouter();
 const formErrors = ref({})
 const formDataLists = reactive({
+  userName: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirmpassword: '',
@@ -234,10 +216,12 @@ const registerSubmit = async (e) => {
     loading.value = false;
     login.value = true;
     console.log(response.data);
+    
     setToken('token', response.data.token);
-    localStorage.setItem('auth-user', JSON.stringify(response.data));
+    sessionStorage.setItem('auth-user', JSON.stringify(response.data));
     userAuthStore.userData = response.data;
     router.push('/myprofile/' + response.data.userName);
+
     $q.notify({
       message: 'Registration Successfully!',
       color: 'primary',
