@@ -1,8 +1,8 @@
 <template>
   <q-page padding>
     
-    <EditUserProfile v-show="$route.query?.t && $route.query?.t == 'profile-details'"/>
-    <EditUserLinks v-show="!($route.query?.t && $route.query?.t == 'profile-details')">
+    <EditUserProfile v-if="$route.query?.t && $route.query?.t == 'profile-details'"/>
+    <EditUserLinks v-if="!($route.query?.t && $route.query?.t == 'profile-details')">
     </EditUserLinks>
   </q-page>
 </template>
