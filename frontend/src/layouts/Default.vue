@@ -14,7 +14,7 @@
             </router-link>
           </div>
           <div :class="[!userAuthStore?.userData ? '' : 'hidden']">
-            <q-btn class="bg-white text-primary ml-2" to="/login">Login</q-btn>
+            <q-btn class="bg-white text-primary ml-2" to="/login" outline flat>Login</q-btn>
           </div>
           <div :class="[userAuthStore?.userData ? '' : 'hidden']">
             <q-btn :class="!($route.query?.t && $route.query?.t == 'profile-details') ? '!bg-violet-200' : ''"
