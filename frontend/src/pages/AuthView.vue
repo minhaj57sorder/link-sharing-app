@@ -13,7 +13,7 @@
             <q-tab-panel name="signin">
               <form class="w-72" @submit="loginSubmit">
                 <div class="mb-3">
-                  <q-input label="Email address" v-model="formDataLists.email" required outlined dense />
+                  <q-input label="UserName or Email address" v-model="formDataLists.email" required outlined dense />
                 </div>
                 <div class="mb-3">
                   <q-input label="Password" v-model="formDataLists.password" required outlined dense
@@ -216,7 +216,7 @@ const registerSubmit = async (e) => {
     loading.value = false;
     login.value = true;
     console.log(response.data);
-    
+
     setToken('token', response.data.token);
     sessionStorage.setItem('auth-user', JSON.stringify(response.data));
     userAuthStore.userData = response.data;
