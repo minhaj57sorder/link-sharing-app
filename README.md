@@ -1,7 +1,13 @@
+
+### live production link
+http://85.31.233.92:5003
+user details { email: 'minhaj@gmail.com', userName: "minhaj", password: 1234 }
+
 ### Important
 create .env file and then
 copy .env.example code into .env file
 or rename .env.example to .env
+
 #### database
 database link is included in .env.example so no need to configure local database
 
@@ -32,10 +38,12 @@ npm run dev
 now your server is running at
 at
 http://localhost:5003
-if you would like to run frontend dev server then make sure
+
+#### if you would like to run frontend dev server then make sure
 NODE_ENV = development
 and frontend running at
 http://localhost:5173
+
 even though frontend running you should visit http://localhost:5003
 i have created proxy server for frontend in dev mode since i am using cookie based auth system
 
@@ -45,4 +53,14 @@ because i am using cookie based authentication
 
 admin url is 
 http://localhost:5003/admin
-asdfasdfsd
+
+#### local database or different database link instruction
+if you don't want to use my db link then you are good to go with that.
+but you might need admin route link access. if so then you should paste this path after backend base url
+like this 
+http://localhost:5003/api/user/auth/create-super-user
+
+this will create default superAdmin and permissions
+superAdmin user details 
+```{ email: 'minhaj@gmail.com', userName: "minhaj", password: 1234 }```
+Now you are all seted up.
