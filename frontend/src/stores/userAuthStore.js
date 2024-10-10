@@ -14,6 +14,7 @@ export const useUserAuthStore = defineStore('user auth store', () => {
     }
   };
   const signOut = () => {
+    userData.value = null;
     sessionStorage.removeItem('auth-user');
     removeToken('token');
     router.push('/login');
