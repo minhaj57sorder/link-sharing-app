@@ -2,6 +2,8 @@
 create .env file and then
 copy .env.example code into .env file
 or rename .env.example to .env
+#### database
+database link is included in .env.example so no need to configure local database
 
 ### Install Dependency for backend
 open your terminal and go to link-sharing-app directory
