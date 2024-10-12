@@ -35,7 +35,7 @@
           <div>
             <q-btn class="mr-2" v-if="userAuthStore.userData?.roles.some(e=>e.slug=='superAdmin')" :to="'/admin'" outline>
               <span class="hide-md-screen">
-                <q-icon name="visibility" />
+                <q-icon name="admin_panel_settings" />
               </span>
               <span class="show-md-screen">
                 Admin
