@@ -64,4 +64,4 @@ http://localhost:5003/api/user/auth/create-super-user
 this will create default superAdmin and permissions
 superAdmin user details 
 ```{ email: 'minhaj@gmail.com', userName: "minhaj", password: 1234 }```
-Now you are all seted up.
+Now you are all seted up. a
