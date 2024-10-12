@@ -12,7 +12,8 @@ or rename .env.example to .env
 database link is included in .env.example so no need to configure local database
 
 ### Install Dependency for backend
-open your terminal and go to link-sharing-app directory
+First of all you need to install nodejs
+then open your terminal and go to link-sharing-app directory
 ```
 npm install
 ```
